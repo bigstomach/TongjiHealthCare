@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "audience.clientId",
+      "type": "java.lang.String",
+      "description": "Description for audience.clientId."
+    },
+    {
+      "name": "audience.base64Secret",
+      "type": "java.lang.String",
+      "description": "Description for audience.base64Secret."
+    }
+  ] }
