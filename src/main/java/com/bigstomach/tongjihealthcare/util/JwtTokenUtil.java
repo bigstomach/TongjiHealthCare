@@ -95,8 +95,7 @@ public class JwtTokenUtil {
      * @return
      */
     public static String getUserId(String token, String base64Security){
-        String userId = parseJWT(token, base64Security).get("userId", String.class);
-        return Base64Util.decode(userId);
+        return parseJWT(token, base64Security).get("userId", String.class);
     }
     /**
      * 从token中获取用户角色
@@ -105,8 +104,7 @@ public class JwtTokenUtil {
      * @return
      */
     public static String getUserRole(String token, String base64Security) {
-        String role= parseJWT(token, base64Security).get("role", String.class);
-        return Base64Util.decode(role);
+        return parseJWT(token, base64Security).get("role", String.class);
     }
     /**
      * 是否已过期

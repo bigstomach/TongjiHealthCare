@@ -6,9 +6,17 @@
         select * from user
     </select>
 
-    <select id="getUser" resultType="user" parameterType="java.lang.String">
-        select * from user
-        where name=#{username}
+    
+    <select id="getUserByPhone" resultType="user" parameterType="java.lang.String">
+        select * from user where phone_number=#{phoneNumber}
+    </select>
+    
+    <insert id="addUser" parameterType="user">
+        insert into user values(null,#{idNumber},#{name},#{password},#{phoneNumber})
+    </insert>
+
+    <select id="getUserById" resultType="user">
+        select * from user where id=#{userId}
     </select>
 
 </mapper>

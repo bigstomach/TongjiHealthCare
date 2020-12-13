@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bigstomach.tongjihealthcare.mapper.QueueMapper">
+
+    <select id="getChooseByOrderId">
+        select * from choose where order_id=#{orderId}
+    </select>
+
+    <select id="getPeopleBefore">
+        select count(*) count
+        from choose
+        where consulting_id=#{consultingId} and enqueue_time &lt; #{enqueueTime}
+    </select>
+
+
+    <select id="getQueueInfo">
+       select c.id consulting_id,count(*) count
+       from consulting_room c join chooose q on c.id=q.consulting_id
+       where c.department_id=#{departmentId}
+       group by c.id
+    </select>
+
+    <insert id="add">
+        insert into choose (null,#{orderId},#{consultingId},NOW())
+    </insert>
+
+    <delete id="delete">
+        delete from choose where order_id=#{orderId}
+    </delete>
+
+    <select id="getQueueOrderId">
+        select o.id id, d.level2 departmentName, d.expertName expertName,
+                o.status status,o.date date,o.time_slot timeSlot
+        from order o join choose c join department d on o.id=c.order_id and o.department_id=d.id
+        where o.patient_id=#{userId}
+    </select>
+
+
+</mapper>

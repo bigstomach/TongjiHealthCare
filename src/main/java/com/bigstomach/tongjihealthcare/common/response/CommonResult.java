@@ -1,24 +1,15 @@
 package com.bigstomach.tongjihealthcare.common.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class CommonResult<T>
 {
     private long code;
     private String message;
     private T data;//后端返回的信息
-
-    protected CommonResult()
-    {
-    }
-
-    protected CommonResult(long code, String message, T data)
-    {
-        this.code = code;
-        this.message = message;
-        this.data = data;
-    }
 
     /**
      * 成功返回结果

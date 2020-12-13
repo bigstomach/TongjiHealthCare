@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bigstomach.tongjihealthcare.mapper.OrderMapper">
+
+    <insert id="addOrder" parameterType="order">
+        insert into order values (null,#{patientId},#{departmentId},#{status}
+        ,#{payerId},#{cancelTimes},#{date},#{timeSlot})
+    </insert>
+
+    <select id="getOrder" resultType="Order">
+        select * from order where id=#{orderId}
+    </select>
+
+
+    <select id="getOrderList" resultType="OrderInfo" >
+        select  o.id id,u1.name patientName, d.level2 departmentName, d.expertName expertName,
+                o.status status,u2.name payerName,o.date date,o.time_slot timeSlot
+        from user u1 join user u2 join order o join department d
+            on u1.id=o.patient_id and u2.id=o.payer_id and d.id=o.department_id
+            <if test="patientId != null" >
+                where o.patient_id=#{patientId}
+            </if>
+            <if test="patientId == null">
+                where o.payer_id=#{payerId} and o.payer_id!=o.patient_id
+            </if>
+            <if test="date != null">
+                and o.date=#{date}
+            </if>
+    </select>
+
+    <update id="increaseCancelTimes">
+        update order set cancel_times=cancel_times+1 where id=#{orderId}
+    </update>
+
+    <update id="cancel">
+        update order set status=2 where id=#{orderId}
+    </update>
+
+
+
+</mapper>

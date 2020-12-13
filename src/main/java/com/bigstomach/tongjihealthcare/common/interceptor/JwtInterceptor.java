@@ -1,8 +1,8 @@
 package com.bigstomach.tongjihealthcare.common.interceptor;
 import com.bigstomach.tongjihealthcare.annotation.AdminNeed;
 import com.bigstomach.tongjihealthcare.annotation.JwtIgnore;
+import com.bigstomach.tongjihealthcare.common.exception.Asserts;
 import com.bigstomach.tongjihealthcare.common.response.ResultCode;
-import com.bigstomach.tongjihealthcare.common.exception.ApiException;
 import com.bigstomach.tongjihealthcare.model.Audience;
 import com.bigstomach.tongjihealthcare.util.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +23,10 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
     private Audience audience;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        String requestPath = request.getRequestURI();
+        if (requestPath.contains("/v2/api-docs") || requestPath.contains("/swagger") || requestPath.contains("/configuration/ui")) {
+            return true;
+        }
         // 忽略带JwtIgnore注解的请求, 不做后续token认证校验
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
@@ -40,7 +44,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
         log.info("## authHeader= {}", authHeader);
         if (StringUtils.isBlank(authHeader) || !authHeader.startsWith(JwtTokenUtil.TOKEN_PREFIX)) {
             log.info("### 用户未登录，请先登录 ###");
-            throw new ApiException(ResultCode.UNAUTHORIZED);
+            Asserts.fail(ResultCode.UNAUTHORIZED);
         }
         // 获取token
         final String token = authHeader.substring(7);
@@ -55,9 +59,10 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             AdminNeed adminNeed = handlerMethod.getMethodAnnotation(AdminNeed.class);
             if (adminNeed != null && !JwtTokenUtil.getUserRole(token, audience.getBase64Secret()).equals("admin")) {
-                throw new ApiException(ResultCode.FORBIDDEN);
+                Asserts.fail(ResultCode.FORBIDDEN);
             }
         }
+        request.setAttribute("currentUser", JwtTokenUtil.getUserId(token,audience.getBase64Secret()));
         return true;
     }
 }
