@@ -3,8 +3,10 @@ package com.bigstomach.tongjihealthcare.controller;
 import cn.hutool.json.JSONObject;
 import com.bigstomach.tongjihealthcare.annotation.CurrentUser;
 import com.bigstomach.tongjihealthcare.annotation.JwtIgnore;
+import com.bigstomach.tongjihealthcare.common.exception.Asserts;
 import com.bigstomach.tongjihealthcare.common.response.CommonResult;
 
+import com.bigstomach.tongjihealthcare.common.response.ResultCode;
 import com.bigstomach.tongjihealthcare.model.User;
 import com.bigstomach.tongjihealthcare.qo.RegisterQO;
 import com.bigstomach.tongjihealthcare.qo.UserQO;
@@ -35,6 +37,8 @@ public class UserController {
     @PostMapping("/register")
     @JwtIgnore
     public CommonResult<String> register(@RequestBody RegisterQO registerQO) {
+        if (registerQO.getIdNumber().length()!=18||registerQO.getPhoneNumber().length()!=11)
+            Asserts.fail(ResultCode.VALIDATE_FAILED);
         userService.register(registerQO.getName(),registerQO.getIdNumber(),registerQO.getPhoneNumber(),registerQO.getPassword());
         return CommonResult.success("注册成功");
     }
