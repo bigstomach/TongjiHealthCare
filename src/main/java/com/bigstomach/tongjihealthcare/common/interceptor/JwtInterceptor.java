@@ -23,6 +23,9 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
     private Audience audience;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        if("OPTIONS".equals(request.getMethod().toUpperCase())) {
+            return true;
+        }
         String requestPath = request.getRequestURI();
         if (requestPath.contains("/v2/api-docs") || requestPath.contains("/swagger") || requestPath.contains("/configuration/ui")) {
             return true;
