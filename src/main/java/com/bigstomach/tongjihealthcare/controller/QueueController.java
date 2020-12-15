@@ -61,7 +61,7 @@ public class QueueController {
     }
 
     @GetMapping("/getPeopleBefore/{orderId}")
-    public CommonResult getPeopleBefore(@PathVariable("orderId") Integer orderId) {
+    public CommonResult<Integer> getPeopleBefore(@PathVariable("orderId") Integer orderId) {
         return CommonResult.success(queueService.getPeopleBefore(orderId));
     }
 

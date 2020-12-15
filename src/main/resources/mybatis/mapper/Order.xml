@@ -24,7 +24,7 @@
                 where o.payer_id=#{payerId} and o.payer_id!=o.patient_id
             </if>
             <if test="date != null">
-                and o.date=#{date}
+                and o.date=#{date} and o.status=0
             </if>
     </select>
 
@@ -33,7 +33,7 @@
     </update>
 
     <update id="cancel">
-        update `order` set status=2 where id=#{orderId}
+        update `order` set status=1 where id=#{orderId}
     </update>
 
 
