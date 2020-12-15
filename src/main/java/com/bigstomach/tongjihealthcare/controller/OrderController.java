@@ -2,10 +2,12 @@ package com.bigstomach.tongjihealthcare.controller;
 
 import com.bigstomach.tongjihealthcare.annotation.CurrentUser;
 import com.bigstomach.tongjihealthcare.common.response.CommonResult;
+import com.bigstomach.tongjihealthcare.qo.DepartmentQO;
 import com.bigstomach.tongjihealthcare.qo.OrderQO;
 import com.bigstomach.tongjihealthcare.service.OrderService;
 import com.bigstomach.tongjihealthcare.vo.OrderVO;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -13,6 +15,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/order")
 public class OrderController {
@@ -20,8 +23,8 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping("/getExpertName")
-    public CommonResult<List<String>> getExpertName(@RequestBody String department) {
-        return CommonResult.success(orderService.getExpertName(department));
+    public CommonResult<List<String>> getExpertName(@RequestBody DepartmentQO departmentQO) {
+        return CommonResult.success(orderService.getExpertName(departmentQO.getDepartment()));
     }
 
     @PostMapping("/addOrder")
@@ -50,7 +53,7 @@ public class OrderController {
 
 
     @PostMapping("/cancel/{orderId}")
-    public CommonResult cancel(@PathVariable("orderId") Integer orderId) {
+    public CommonResult<String> cancel(@PathVariable("orderId") Integer orderId) {
         orderService.cancel(orderId);
         return CommonResult.success("放弃就诊成功");
     }

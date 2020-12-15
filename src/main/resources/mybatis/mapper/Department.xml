@@ -4,7 +4,7 @@
         select id from department where level2=#{department} and expert_name=#{expertName}
     </select>
     
-    <select id="getExpertName">
+    <select id="getExpertName" resultType="java.lang.String">
         select expert_name from department where level2=#{department} and expert_name!="#"
     </select>
 
