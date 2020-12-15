@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -17,10 +19,17 @@ public class OrderController {
     @Resource
     private OrderService orderService;
 
+    @GetMapping("/getExpertName")
+    public CommonResult<List<String>> getExpertName(@RequestBody String department) {
+        return CommonResult.success(orderService.getExpertName(department));
+    }
+
     @PostMapping("/addOrder")
     @ApiOperation(value = "创建订单")
-    public  CommonResult addOrder(@RequestBody OrderQO orderQO, @CurrentUser String userId) {
-        orderService.addOrder(orderQO.getPatientId(),orderQO.getDepartment(),orderQO.getExpertName(),orderQO.getDate(),orderQO.getTimeSlot(),Integer.valueOf(userId));
+    public  CommonResult<String> addOrder(@RequestBody OrderQO orderQO, @CurrentUser String userId) {
+        orderService.addOrder(orderQO.getPatientId(),orderQO.getDepartment(),orderQO.getExpertName(),
+                LocalDate.parse(orderQO.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                orderQO.getTimeSlot(),Integer.valueOf(userId));
         return CommonResult.success("订单创建成功");
     }
 

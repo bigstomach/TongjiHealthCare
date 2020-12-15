@@ -7,7 +7,7 @@ import java.time.LocalDate;
 @Data public class OrderQO {
     private String department;
     private String expertName;
-    private LocalDate date;
+    private String date;
     private Integer timeSlot;
     private Integer patientId;
 }

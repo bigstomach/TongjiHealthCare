@@ -30,8 +30,8 @@
 
     <select id="getQueueOrderId">
         select o.id id, d.level2 departmentName, d.expertName expertName,
-                o.status status,o.date date,o.time_slot timeSlot
-        from order o join choose c join department d on o.id=c.order_id and o.department_id=d.id
+                o.status status,o.date `date`,o.time_slot timeSlot
+        from `order` o join choose c join department d on o.id=c.order_id and o.department_id=d.id
         where o.patient_id=#{userId}
     </select>
 

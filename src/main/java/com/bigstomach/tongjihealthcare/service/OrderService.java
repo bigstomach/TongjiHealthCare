@@ -21,4 +21,6 @@ public interface OrderService {
     void increaseCancelTimes(Integer orderId);
 
     void cancel(Integer orderId);
+
+    List<String> getExpertName(String department);
 }

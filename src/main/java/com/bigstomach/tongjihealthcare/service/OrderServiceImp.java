@@ -62,4 +62,9 @@ public class OrderServiceImp implements OrderService {
         orderMapper.cancel(orderId);
     }
 
+    @Override
+    public List<String> getExpertName(String department) {
+        return departmentMapper.getExpertName(department);
+    }
+
 }
