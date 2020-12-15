@@ -13,7 +13,7 @@
 
 
     <select id="getOrderList" resultType="OrderInfo" >
-        select  o.id id,u1.name patientName, d.level2 departmentName, d.expertName expertName,
+        select  o.id id,u1.name patientName, d.level2 departmentName, d.expert_name expertName,
                 o.status status,u2.name payerName,o.date `date`,o.time_slot timeSlot
         from user u1 join `user` u2 join `order` o join department d
             on u1.id=o.patient_id and u2.id=o.payer_id and d.id=o.department_id
