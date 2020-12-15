@@ -32,8 +32,8 @@
         update `order` set cancel_times=cancel_times+1 where id=#{orderId}
     </update>
 
-    <update id="cancel">
-        update `order` set status=1 where id=#{orderId}
+    <update id="modifyStatus">
+        update `order` set status=#{status} where id=#{orderId}
     </update>
 
 

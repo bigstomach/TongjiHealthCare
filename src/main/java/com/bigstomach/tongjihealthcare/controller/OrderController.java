@@ -55,4 +55,10 @@ public class OrderController {
         orderService.cancel(orderId);
         return CommonResult.success("放弃就诊成功");
     }
+
+    @PostMapping("/signIn/{orderId}")
+    public CommonResult signIn(@PathVariable("orderId") Integer orderId) {
+        orderService.signIn(orderId);
+        return CommonResult.success("签到成功");
+    }
 }

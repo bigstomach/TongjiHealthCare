@@ -9,8 +9,9 @@ import lombok.Getter;
 public enum OrderStatus {
 
     CREATED(0, "已挂号"),
-    CANCELED(1,"取消就诊"),
-    ENDED(2,"结束就诊");
+    SIGN_IN(1,"已签到"),
+    CANCELED(2,"取消就诊"),
+    ENDED(3,"结束就诊");
 
 
 

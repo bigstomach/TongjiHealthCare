@@ -1,6 +1,7 @@
 package com.bigstomach.tongjihealthcare.model;
 
 
+import com.bigstomach.tongjihealthcare.enums.OrderStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -27,6 +28,6 @@ public class Order {
         this.date = date;
         this.timeSlot = timeSlot;
         this.cancelTimes = 0;
-        this.status = 0;
+        this.status = OrderStatus.CREATED.getCode();
     }
 }

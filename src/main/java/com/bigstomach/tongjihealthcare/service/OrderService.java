@@ -23,4 +23,6 @@ public interface OrderService {
     void cancel(Integer orderId);
 
     List<String> getExpertName(String department);
+
+    void signIn(Integer orderId);
 }

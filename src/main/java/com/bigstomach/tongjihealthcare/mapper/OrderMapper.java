@@ -15,5 +15,5 @@ public interface OrderMapper {
     Order getOrder(Integer orderId);
     void increaseCancelTimes(Integer orderId);
 
-    void cancel(Integer orderId);
+    void modifyStatus(Integer orderId,Integer status);
 }

@@ -1,6 +1,7 @@
 package com.bigstomach.tongjihealthcare.service;
 
 import com.bigstomach.tongjihealthcare.convert.ObjectConverter;
+import com.bigstomach.tongjihealthcare.enums.OrderStatus;
 import com.bigstomach.tongjihealthcare.mapper.DepartmentMapper;
 import com.bigstomach.tongjihealthcare.mapper.OrderMapper;
 import com.bigstomach.tongjihealthcare.mapper.QueueMapper;
@@ -59,12 +60,17 @@ public class OrderServiceImp implements OrderService {
     @Transactional
     public void cancel(Integer orderId) {
         queueMapper.delete(orderId);
-        orderMapper.cancel(orderId);
+        orderMapper.modifyStatus(orderId, OrderStatus.CANCELED.getCode());
     }
 
     @Override
     public List<String> getExpertName(String department) {
         return departmentMapper.getExpertName(department);
+    }
+
+    @Override
+    public void signIn(Integer orderId) {
+        orderMapper.modifyStatus(orderId,OrderStatus.SIGN_IN.getCode());
     }
 
 }

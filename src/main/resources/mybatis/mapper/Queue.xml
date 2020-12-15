@@ -21,7 +21,7 @@
     </select>
 
     <insert id="add">
-        insert into choose (null,#{orderId},#{consultingId},NOW())
+        insert into choose values (null,#{orderId},#{consultingId},NOW())
     </insert>
 
     <delete id="delete">
@@ -29,10 +29,11 @@
     </delete>
 
     <select id="getQueueOrder" resultType="OrderInQueue">
-        select o.id id, d.level2 departmentName, d.expertName expertName,
+        select o.id id, d.level2 departmentName, d.expert_name expertName,
                 o.status status,o.date `date`,o.time_slot timeSlot
         from `order` o join choose c join department d on o.id=c.order_id and o.department_id=d.id
         where o.patient_id=#{userId}
+        limit 1
     </select>
 
 

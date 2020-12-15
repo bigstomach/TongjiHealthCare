@@ -33,6 +33,7 @@ public class QueueServiceImp implements QueueService{
 
     @Override
     public void choose(Integer orderId, Integer consultingId) {
+        if (checkInQueue(orderId)!=null) Asserts.fail(ResultCode.ALREADY_IN_QUEUE);
         queueMapper.add(orderId,consultingId);
     }
 
