@@ -8,12 +8,9 @@ import com.bigstomach.tongjihealthcare.model.Audience;
 import com.bigstomach.tongjihealthcare.model.User;
 import com.bigstomach.tongjihealthcare.util.JwtTokenUtil;
 import com.bigstomach.tongjihealthcare.vo.UserVO;
-import io.swagger.models.auth.In;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @Service
 public class UserServiceImp implements UserService {

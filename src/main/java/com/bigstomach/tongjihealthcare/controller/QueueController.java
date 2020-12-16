@@ -6,7 +6,6 @@ import com.bigstomach.tongjihealthcare.service.OrderService;
 import com.bigstomach.tongjihealthcare.service.QueueService;
 import com.bigstomach.tongjihealthcare.vo.OrderInQueueVO;
 import com.bigstomach.tongjihealthcare.vo.QueueVO;
-import lombok.val;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

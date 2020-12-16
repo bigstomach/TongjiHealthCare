@@ -7,16 +7,13 @@ import com.bigstomach.tongjihealthcare.common.exception.Asserts;
 import com.bigstomach.tongjihealthcare.common.response.CommonResult;
 
 import com.bigstomach.tongjihealthcare.common.response.ResultCode;
-import com.bigstomach.tongjihealthcare.model.User;
 import com.bigstomach.tongjihealthcare.qo.RegisterQO;
 import com.bigstomach.tongjihealthcare.qo.UserQO;
 import com.bigstomach.tongjihealthcare.service.UserService;
 import com.bigstomach.tongjihealthcare.vo.UserVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 
 @RestController

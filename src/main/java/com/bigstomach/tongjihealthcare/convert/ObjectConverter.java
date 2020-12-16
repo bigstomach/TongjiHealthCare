@@ -17,8 +17,6 @@ public interface ObjectConverter {
     @Mapping(target = "age", expression = "java(CustomMapping.getAge(user.getIdNumber()))")
     UserVO user2UserVO(User user);
 
-    List<UserVO> userList2UserVOList(List<User> userList);
-
     @Mapping(target = "status", expression = "java(com.bigstomach.tongjihealthcare.enums.OrderStatus.getStatusByCode(orderInfo.getStatus()).getDesc())")
     OrderVO orderInfo2OrderVO(OrderInfo orderInfo);
 
