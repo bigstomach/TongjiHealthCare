@@ -11,6 +11,5 @@ public class OrderInQueueVO {
     private String departmentName;
     private String expertName;
     private String status;
-    private LocalDate date;
-    private Integer timeSlot;
+    private Integer consultingId;
 }

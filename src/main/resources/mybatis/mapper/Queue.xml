@@ -30,7 +30,7 @@
 
     <select id="getQueueOrder" resultType="OrderInQueue">
         select o.id id, d.level2 departmentName, d.expert_name expertName,
-                o.status status,o.date `date`,o.time_slot timeSlot
+                o.status status,c.consulting_id consultingId
         from `order` o join choose c join department d on o.id=c.order_id and o.department_id=d.id
         where o.patient_id=#{userId}
         limit 1

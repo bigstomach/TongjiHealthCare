@@ -9,6 +9,5 @@ import java.time.LocalDate;
     private String departmentName;
     private String expertName;
     private Integer status;
-    private LocalDate date;
-    private Integer timeSlot;
+    private Integer consultingId;
 }
