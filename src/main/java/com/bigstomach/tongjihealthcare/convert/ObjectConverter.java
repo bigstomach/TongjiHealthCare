@@ -1,13 +1,7 @@
 package com.bigstomach.tongjihealthcare.convert;
 
-import com.bigstomach.tongjihealthcare.model.OrderInQueue;
-import com.bigstomach.tongjihealthcare.model.OrderInfo;
-import com.bigstomach.tongjihealthcare.model.QueueInfo;
-import com.bigstomach.tongjihealthcare.model.User;
-import com.bigstomach.tongjihealthcare.vo.OrderInQueueVO;
-import com.bigstomach.tongjihealthcare.vo.OrderVO;
-import com.bigstomach.tongjihealthcare.vo.QueueVO;
-import com.bigstomach.tongjihealthcare.vo.UserVO;
+import com.bigstomach.tongjihealthcare.model.*;
+import com.bigstomach.tongjihealthcare.vo.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -32,4 +26,6 @@ public interface ObjectConverter {
     List<OrderVO> orderInfoList2OrderVOList(List<OrderInfo> orderList);
 
     List<QueueVO> queueInfoList2QueueVOList(List<QueueInfo> queueList);
+
+    List<UserInQueueVO> userInQueueList2UserInQueueVOList(List<UserInQueue> userInqueue);
 }
