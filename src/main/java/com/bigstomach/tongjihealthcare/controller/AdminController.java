@@ -23,6 +23,7 @@ public class AdminController {
 
     @PostMapping("/getConsultingRoomId")
     @ApiOperation("获取诊室id")
+    //@AdminNeed
     public CommonResult<ConsultingRoomVO> getConsultingRoomId(@RequestBody ConsultingRoomQO consultingRoomQO)
     {
         return CommonResult.success(adminService.getConsultingRoomId(consultingRoomQO.getDepartment(),consultingRoomQO.getType()));
@@ -30,6 +31,7 @@ public class AdminController {
 
     @GetMapping("/getQueueList/{id}")
     @ApiOperation("获取诊室中当前排队列表")
+    //@AdminNeed
     public CommonResult<List<UserInQueueVO>> getQueueList(@PathVariable("id") Integer consultingRoomId)
     {
         return CommonResult.success(adminService.getConsultingRoom(consultingRoomId));
@@ -37,6 +39,7 @@ public class AdminController {
 
     @PostMapping("/setQueueStatus")
     @ApiOperation("设置过号/就诊完成")
+    //@AdminNeed
     public CommonResult<List<UserInQueueVO>> setQueueInvalid(@RequestBody OrderStatusQO orderStatusQO)
     {
         return CommonResult.success(adminService.setQueueStatus(orderStatusQO.getConsultingRoomId(),orderStatusQO.getStatusType()));

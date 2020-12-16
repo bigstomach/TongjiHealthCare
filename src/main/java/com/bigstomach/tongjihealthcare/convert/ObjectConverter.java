@@ -28,4 +28,6 @@ public interface ObjectConverter {
     List<QueueVO> queueInfoList2QueueVOList(List<QueueInfo> queueList);
 
     List<UserInQueueVO> userInQueueList2UserInQueueVOList(List<UserInQueue> userInqueue);
+
+    FamilyVO family2FamilyVO(Family family);
 }

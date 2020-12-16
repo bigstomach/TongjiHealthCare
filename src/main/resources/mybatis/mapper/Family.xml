@@ -1,0 +1,24 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bigstomach.tongjihealthcare.mapper.FamilyMapper">
+
+    <select id="getFamily" resultType="Family">
+        select f.id id,f.family_name name
+        from user u join in_family i on u.id = i.patient_id join family f on i.family_id = f.id
+        where u.id=#{UserId}
+    </select>
+
+    <insert id="createFamily" parameterType="java.lang.String">
+        insert family (family_name) values (#{familyName})
+    </insert>
+
+    <select id="getFamilyId" resultType="java.lang.Integer">
+        select f.id
+        from family f
+        where f.family_name=#{familyName}
+        limit 1
+    </select>
+
+    <insert id="creatorAddInFamily" parameterType="AddFamily">
+        insert in_family (patient_id, family_id, is_creator, relation) values (#{UserId},#{FamilyId},#{is_creator},#{relation})
+    </insert>
+</mapper>

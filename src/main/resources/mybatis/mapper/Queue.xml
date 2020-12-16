@@ -36,4 +36,36 @@
         limit 1
     </select>
 
+    <select id="getConsultingRoom" resultType="java.lang.Integer">
+        select cr.id
+        from consulting_room cr join department d on cr.department_id=d.id
+        where d.level2=#{departmentName}
+        order by cr.id
+    </select>
+
+    <select id="getUserInQueueList" resultType="UserInQueue">
+        select u.id userId,u.name userName
+        from consulting_room cr join choose c join `order` o join user u on cr.id=c.consulting_id and c.order_id=o.id and o.patient_id=u.id
+        where cr.id=#{id} and o.status=1
+    </select>
+
+    <select id="getOrderIdInQueueFirst" resultType="java.lang.Integer">
+        select o.id
+        from consulting_room cr join choose c join `order` o on c.order_id=o.id and c.consulting_id=cr.id
+        where cr.id=#{consultingRoomId} and o.status=1
+        order by c.enqueue_time
+        limit 1
+    </select>
+
+    <update id="setOrderStatus">
+        update `order` o
+        set o.status=#{status}
+        where o.id=#{orderId}
+    </update>
+
+    <delete id="deleteChoose">
+        delete from choose c
+        where c.order_id=#{orderId}
+    </delete>
+
 </mapper>
