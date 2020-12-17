@@ -35,7 +35,6 @@ public class AdminServiceImp implements AdminService {
     public List<UserInQueueVO> getConsultingRoom(Integer consultingRoomId)
     {
         List<UserInQueue> queue=queueMapper.getUserInQueueList(consultingRoomId);
-        System.out.println("查出的用户"+queue.get(0).getUserId()+queue.get(0).getUserName());
         return ObjectConverter.INSTANCE.userInQueueList2UserInQueueVOList(queue);
     }
 
@@ -59,10 +58,15 @@ public class AdminServiceImp implements AdminService {
             default:{
             }
         }
+        List<UserInQueue> userInQueues=queueMapper.getUserInQueueList(consultingRoomId);
         RestTemplate restTemplate=new RestTemplate();
         List<UserBefore> userBeforeList=new ArrayList<>();
-        userBeforeList.add(new UserBefore("10000001",6));
+        for (int i=0;i<userInQueues.size();i++)
+        {
+            System.out.println("通知的userId:"+userInQueues.get(i).getUserId().toString()+"前面的人的个数："+i);
+            userBeforeList.add(new UserBefore(userInQueues.get(i).getUserId().toString(),i));
+        }
         restTemplate.postForEntity("http://39.106.53.1:3000/push",userBeforeList, String.class);
-        return ObjectConverter.INSTANCE.userInQueueList2UserInQueueVOList(queueMapper.getUserInQueueList(consultingRoomId));
+        return ObjectConverter.INSTANCE.userInQueueList2UserInQueueVOList(userInQueues);
     }
 }

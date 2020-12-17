@@ -30,4 +30,16 @@ public interface ObjectConverter {
     List<UserInQueueVO> userInQueueList2UserInQueueVOList(List<UserInQueue> userInqueue);
 
     FamilyVO family2FamilyVO(Family family);
+
+    @Mapping(target = "sex", expression = "java(CustomMapping.getSex(familyMember.getUserIdNumber()))")
+    @Mapping(target = "age", expression = "java(CustomMapping.getAge(familyMember.getUserIdNumber()))")
+    FamilyMemberVO familyMember2FamilyMemberVO(FamilyMember familyMember);
+
+    List<FamilyMemberVO> familyMemberList2FamilyMemberVOList(List<FamilyMember> familyMembers);
+
+    @Mapping(target = "value",expression = "java(familyMember.getUserId())")
+    @Mapping(target = "text",expression = "java(familyMember.getName())")
+    UserInFamiyVO familyMember2UserInFamilyVO(FamilyMember familyMember);
+
+    List<UserInFamiyVO> familyMemberList2UserInFamilyList(List<FamilyMember> familyMembers);
 }

@@ -4,10 +4,14 @@ import com.bigstomach.tongjihealthcare.convert.ObjectConverter;
 import com.bigstomach.tongjihealthcare.mapper.FamilyMapper;
 import com.bigstomach.tongjihealthcare.model.AddFamily;
 import com.bigstomach.tongjihealthcare.model.Family;
+import com.bigstomach.tongjihealthcare.model.FamilyMember;
+import com.bigstomach.tongjihealthcare.vo.FamilyMemberVO;
 import com.bigstomach.tongjihealthcare.vo.FamilyVO;
+import com.bigstomach.tongjihealthcare.vo.UserInFamiyVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -38,8 +42,8 @@ public class FamilyServiceImp implements FamilyService {
         addFamily.setFamilyId(familyId);
         addFamily.setUserId(UserId);
         addFamily.setIs_creator(1);
-        addFamily.setRelation("#");
-        familyMapper.creatorAddInFamily(addFamily);
+        addFamily.setRelation("创建者");
+        familyMapper.AddInFamily(addFamily);
         return familyId;
     }
 
@@ -54,4 +58,54 @@ public class FamilyServiceImp implements FamilyService {
         }
         return null;
     }
+
+    @Override
+    public Boolean addInFamily(Integer UserId, Integer familyId, String creatorName, String relation) {
+        Integer familyIdfortest=familyMapper.getFamilyIdByCreator(creatorName);
+        if (!familyIdfortest.equals(familyId))
+        {
+            //表示不一致，加入失败
+            return Boolean.FALSE;
+        }
+        else{
+            AddFamily addFamily=new AddFamily();
+            addFamily.setUserId(UserId);
+            addFamily.setFamilyId(familyId);
+            addFamily.setIs_creator(0);
+            addFamily.setRelation(relation);
+            familyMapper.AddInFamily(addFamily);
+            //表示成功加入家庭
+            return Boolean.TRUE;
+        }
+    }
+
+    @Override
+    public List<FamilyMemberVO> getMemberList(Integer UserId) {
+        List<Family> familyList=familyMapper.getFamily(UserId);
+        if (familyList.size()>0) {
+            Integer familyId=familyList.get(0).getId();
+            List<FamilyMember> familyMemberList=familyMapper.getMemberList(familyId,UserId);
+            familyMemberList.add(0,familyMapper.getMyFamilyInfo(UserId));
+            return ObjectConverter.INSTANCE.familyMemberList2FamilyMemberVOList(familyMemberList);
+        }
+        else {
+            return null;
+        }
+    }
+
+    @Override
+    public List<UserInFamiyVO> getPatientName(Integer UserId) {
+        List<Family> familyList=familyMapper.getFamily(UserId);
+        if (familyList.size()>0) {
+            Integer familyId=familyList.get(0).getId();
+            List<FamilyMember> familyMemberList=familyMapper.getMemberList(familyId,UserId);
+            familyMemberList.add(0,familyMapper.getMyFamilyInfo(UserId));
+            return ObjectConverter.INSTANCE.familyMemberList2UserInFamilyList(familyMemberList);
+        }
+        else {
+            return null;
+        }
+    }
+
+
 }
