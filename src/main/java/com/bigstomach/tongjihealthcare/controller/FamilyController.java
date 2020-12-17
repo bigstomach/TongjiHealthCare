@@ -44,16 +44,10 @@ public class FamilyController {
 
     @PostMapping("/addInFamily")
     @ApiOperation("加入家庭")
-    public CommonResult<String> addInFamily(@CurrentUser String userId,@RequestBody InFamilyQO inFamilyQO)
+    public CommonResult<Boolean> addInFamily(@CurrentUser String userId,@RequestBody InFamilyQO inFamilyQO)
     {
         Boolean result=familyService.addInFamily(Integer.valueOf(userId),inFamilyQO.getFamilyId(),inFamilyQO.getCreatorName(),inFamilyQO.getRelation());
-        if (result)
-        {
-            return CommonResult.success("加入家庭成功");
-        }
-        else {
-            return CommonResult.success("加入家庭失败");
-        }
+        return CommonResult.success(result);
     }
 
     @GetMapping("/getFamilyMemberList")
