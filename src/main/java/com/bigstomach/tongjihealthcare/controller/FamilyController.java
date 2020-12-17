@@ -2,13 +2,12 @@ package com.bigstomach.tongjihealthcare.controller;
 
 import com.bigstomach.tongjihealthcare.annotation.CurrentUser;
 import com.bigstomach.tongjihealthcare.common.response.CommonResult;
-import com.bigstomach.tongjihealthcare.convert.ObjectConverter;
-import com.bigstomach.tongjihealthcare.mapper.FamilyMapper;
 import com.bigstomach.tongjihealthcare.qo.FamilyQO;
 import com.bigstomach.tongjihealthcare.qo.InFamilyQO;
 import com.bigstomach.tongjihealthcare.service.FamilyService;
 import com.bigstomach.tongjihealthcare.vo.FamilyMemberVO;
 import com.bigstomach.tongjihealthcare.vo.FamilyVO;
+import com.bigstomach.tongjihealthcare.vo.UserInFamiyVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,5 +61,12 @@ public class FamilyController {
     public CommonResult<List<FamilyMemberVO>> getFamilyMemberList(@CurrentUser String userId)
     {
         return CommonResult.success(familyService.getMemberList(Integer.valueOf(userId)));
+    }
+
+    @GetMapping("/getPatientName")
+    @ApiOperation("获取就诊人姓名")
+    public CommonResult<List<UserInFamiyVO>> getPatientName(@CurrentUser String userId)
+    {
+        return CommonResult.success(familyService.getPatientName(Integer.valueOf(userId)));
     }
 }

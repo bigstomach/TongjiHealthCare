@@ -7,9 +7,11 @@ import com.bigstomach.tongjihealthcare.model.Family;
 import com.bigstomach.tongjihealthcare.model.FamilyMember;
 import com.bigstomach.tongjihealthcare.vo.FamilyMemberVO;
 import com.bigstomach.tongjihealthcare.vo.FamilyVO;
+import com.bigstomach.tongjihealthcare.vo.UserInFamiyVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -82,7 +84,23 @@ public class FamilyServiceImp implements FamilyService {
         List<Family> familyList=familyMapper.getFamily(UserId);
         if (familyList.size()>0) {
             Integer familyId=familyList.get(0).getId();
-            return ObjectConverter.INSTANCE.familyMemberList2FamilyMemberVOList(familyMapper.getMemberList(familyId));
+            List<FamilyMember> familyMemberList=familyMapper.getMemberList(familyId,UserId);
+            familyMemberList.add(0,familyMapper.getMyFamilyInfo(UserId));
+            return ObjectConverter.INSTANCE.familyMemberList2FamilyMemberVOList(familyMemberList);
+        }
+        else {
+            return null;
+        }
+    }
+
+    @Override
+    public List<UserInFamiyVO> getPatientName(Integer UserId) {
+        List<Family> familyList=familyMapper.getFamily(UserId);
+        if (familyList.size()>0) {
+            Integer familyId=familyList.get(0).getId();
+            List<FamilyMember> familyMemberList=familyMapper.getMemberList(familyId,UserId);
+            familyMemberList.add(0,familyMapper.getMyFamilyInfo(UserId));
+            return ObjectConverter.INSTANCE.familyMemberList2UserInFamilyList(familyMemberList);
         }
         else {
             return null;

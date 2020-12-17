@@ -29,8 +29,15 @@
     </select>
 
     <select id="getMemberList" resultType="FamilyMember">
-        select u.id_number UserIdNumber,u.name name,i.relation relationship
+        select u.id UserId,u.id_number UserIdNumber,u.name name,i.relation relationship
         from user u join in_family i on u.id = i.patient_id
-        where i.family_id=#{familyId}
+        where i.family_id=#{familyId} and u.id&lt;&gt;#{UserId}
+    </select>
+
+    <select id="getMyFamilyInfo" resultType="FamilyMember">
+        select u.id UserId,u.id_number UserIdNumber,u.name name,i.relation relationship
+        from in_family i join user u on i.patient_id = u.id
+        where u.id=#{UserId}
+        limit 1
     </select>
 </mapper>

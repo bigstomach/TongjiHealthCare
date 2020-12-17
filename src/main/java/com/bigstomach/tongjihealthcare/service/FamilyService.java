@@ -3,6 +3,7 @@ package com.bigstomach.tongjihealthcare.service;
 import com.bigstomach.tongjihealthcare.model.FamilyMember;
 import com.bigstomach.tongjihealthcare.vo.FamilyMemberVO;
 import com.bigstomach.tongjihealthcare.vo.FamilyVO;
+import com.bigstomach.tongjihealthcare.vo.UserInFamiyVO;
 
 import java.util.List;
 
@@ -12,4 +13,5 @@ public interface FamilyService {
     public FamilyVO getMyFamily(Integer UserId);
     public Boolean addInFamily(Integer UserId,Integer familyId,String creatorName,String relation);
     public List<FamilyMemberVO> getMemberList(Integer UserId);
+    public List<UserInFamiyVO> getPatientName(Integer UserId);
 }
