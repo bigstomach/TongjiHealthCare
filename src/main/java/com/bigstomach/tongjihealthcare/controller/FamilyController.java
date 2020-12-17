@@ -5,12 +5,15 @@ import com.bigstomach.tongjihealthcare.common.response.CommonResult;
 import com.bigstomach.tongjihealthcare.convert.ObjectConverter;
 import com.bigstomach.tongjihealthcare.mapper.FamilyMapper;
 import com.bigstomach.tongjihealthcare.qo.FamilyQO;
+import com.bigstomach.tongjihealthcare.qo.InFamilyQO;
 import com.bigstomach.tongjihealthcare.service.FamilyService;
+import com.bigstomach.tongjihealthcare.vo.FamilyMemberVO;
 import com.bigstomach.tongjihealthcare.vo.FamilyVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequestMapping("/family")
@@ -38,5 +41,26 @@ public class FamilyController {
     public CommonResult<FamilyVO> getMyFamily(@CurrentUser String userId)
     {
         return CommonResult.success(familyService.getMyFamily(Integer.valueOf(userId)));
+    }
+
+    @PostMapping("/addInFamily")
+    @ApiOperation("加入家庭")
+    public CommonResult<String> addInFamily(@CurrentUser String userId,@RequestBody InFamilyQO inFamilyQO)
+    {
+        Boolean result=familyService.addInFamily(Integer.valueOf(userId),inFamilyQO.getFamilyId(),inFamilyQO.getCreatorName(),inFamilyQO.getRelation());
+        if (result)
+        {
+            return CommonResult.success("加入家庭成功");
+        }
+        else {
+            return CommonResult.success("加入家庭失败");
+        }
+    }
+
+    @GetMapping("/getFamilyMemberList")
+    @ApiOperation("获取家庭成员列表")
+    public CommonResult<List<FamilyMemberVO>> getFamilyMemberList(@CurrentUser String userId)
+    {
+        return CommonResult.success(familyService.getMemberList(Integer.valueOf(userId)));
     }
 }

@@ -18,7 +18,19 @@
         limit 1
     </select>
 
-    <insert id="creatorAddInFamily" parameterType="AddFamily">
+    <insert id="AddInFamily" parameterType="AddFamily">
         insert in_family (patient_id, family_id, is_creator, relation) values (#{UserId},#{FamilyId},#{is_creator},#{relation})
     </insert>
+
+    <select id="getFamilyIdByCreator" resultType="java.lang.Integer">
+        select i.family_id
+        from in_family i join user u on i.patient_id = u.id
+        where u.name=#{creatorName} and i.is_creator=1
+    </select>
+
+    <select id="getMemberList" resultType="FamilyMember">
+        select u.id_number UserIdNumber,u.name name,i.relation relationship
+        from user u join in_family i on u.id = i.patient_id
+        where i.family_id=#{familyId}
+    </select>
 </mapper>
