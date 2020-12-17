@@ -1,13 +1,18 @@
 package com.bigstomach.tongjihealthcare.service;
 
+import com.bigstomach.tongjihealthcare.common.response.ResultCode;
 import com.bigstomach.tongjihealthcare.convert.ObjectConverter;
 import com.bigstomach.tongjihealthcare.mapper.QueueMapper;
+import com.bigstomach.tongjihealthcare.model.UserBefore;
 import com.bigstomach.tongjihealthcare.model.UserInQueue;
 import com.bigstomach.tongjihealthcare.vo.ConsultingRoomVO;
 import com.bigstomach.tongjihealthcare.vo.UserInQueueVO;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -54,6 +59,10 @@ public class AdminServiceImp implements AdminService {
             default:{
             }
         }
+        RestTemplate restTemplate=new RestTemplate();
+        List<UserBefore> userBeforeList=new ArrayList<>();
+        userBeforeList.add(new UserBefore("10000001",6));
+        restTemplate.postForEntity("http://39.106.53.1:3000/push",userBeforeList, String.class);
         return ObjectConverter.INSTANCE.userInQueueList2UserInQueueVOList(queueMapper.getUserInQueueList(consultingRoomId));
     }
 }
