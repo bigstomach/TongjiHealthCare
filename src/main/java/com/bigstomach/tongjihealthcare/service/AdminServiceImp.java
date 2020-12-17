@@ -35,7 +35,7 @@ public class AdminServiceImp implements AdminService {
     public List<UserInQueueVO> getConsultingRoom(Integer consultingRoomId)
     {
         List<UserInQueue> queue=queueMapper.getUserInQueueList(consultingRoomId);
-        System.out.println("查出的用户"+queue.get(0).getUserId()+queue.get(0).getUserName());
+//        System.out.println("查出的用户"+queue.get(0).getUserId()+queue.get(0).getUserName());
         return ObjectConverter.INSTANCE.userInQueueList2UserInQueueVOList(queue);
     }
 
