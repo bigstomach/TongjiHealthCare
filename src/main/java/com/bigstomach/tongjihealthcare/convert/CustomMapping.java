@@ -10,7 +10,7 @@ public class CustomMapping {
         if (Integer.parseInt(sexNum) % 2 != 0) {
             sex = "男";
         } else {
-            sex= "2";//女
+            sex= "女";//女
         }
         return sex;
     }
