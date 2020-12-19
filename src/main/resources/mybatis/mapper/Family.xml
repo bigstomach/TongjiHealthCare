@@ -40,4 +40,10 @@
         where u.id=#{UserId}
         limit 1
     </select>
+
+    <select id="getMyInfo" resultType="UserInFamily">
+        select u.id userId,u.name userName
+        from user u
+        where u.id=#{UserId}
+    </select>
 </mapper>

@@ -5,6 +5,7 @@ import com.bigstomach.tongjihealthcare.mapper.FamilyMapper;
 import com.bigstomach.tongjihealthcare.model.AddFamily;
 import com.bigstomach.tongjihealthcare.model.Family;
 import com.bigstomach.tongjihealthcare.model.FamilyMember;
+import com.bigstomach.tongjihealthcare.model.UserInFamily;
 import com.bigstomach.tongjihealthcare.vo.FamilyMemberVO;
 import com.bigstomach.tongjihealthcare.vo.FamilyVO;
 import com.bigstomach.tongjihealthcare.vo.UserInFamiyVO;
@@ -103,7 +104,10 @@ public class FamilyServiceImp implements FamilyService {
             return ObjectConverter.INSTANCE.familyMemberList2UserInFamilyList(familyMemberList);
         }
         else {
-            return null;
+            UserInFamily userInFamily=familyMapper.getMyInfo(UserId);
+            List<UserInFamiyVO> userInFamiyVOList=new ArrayList<>();
+            userInFamiyVOList.add(ObjectConverter.INSTANCE.userInfamily2UserInfamilyVO(userInFamily));
+            return userInFamiyVOList;
         }
     }
 
