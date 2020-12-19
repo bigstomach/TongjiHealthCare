@@ -26,7 +26,6 @@ public class OrderServiceImp implements OrderService {
     @Override
     public void addOrder(Integer patientId, String department, String expertName, LocalDate date, Integer timeSlot, Integer payerId) {
         Integer departmentId=departmentMapper.getDepartmentId(department,expertName);
-        patientId=payerId;
         Order order=new Order(patientId,payerId,departmentId,date,timeSlot);
         orderMapper.addOrder(order);
     }

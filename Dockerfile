@@ -5,6 +5,8 @@ WORKDIR /build/
 # 把本地的 pom.xml 和 src目录 复制到镜像的/build目录下
 COPY pom.xml /build/
 COPY src /build/src/
+# 修改maven源
+RUN sed -i -e 's/<mirrors>/&    <mirror>      <id>nexus-aliyun<\/id>      <url>http:\/\/maven.aliyun.com\/nexus\/content\/groups\/public<\/url>      <mirrorOf>*<\/mirrorOf>    <\/mirror>/' /usr/share/maven/conf/settings.xml
 # 执行maven打包
 RUN mvn package
 # 运行jar采用jdk基础镜像
