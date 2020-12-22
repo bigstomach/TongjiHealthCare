@@ -9,6 +9,7 @@ import com.bigstomach.tongjihealthcare.vo.ConsultingRoomVO;
 import com.bigstomach.tongjihealthcare.vo.UserInQueueVO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
@@ -39,8 +40,20 @@ public class AdminServiceImp implements AdminService {
     }
 
     @Override
+    @Transactional
     public List<UserInQueueVO> setQueueStatus(Integer consultingRoomId,Integer statusType)
     {
+        List<UserInQueue> userInQueues=queueMapper.getUserInQueueList(consultingRoomId);
+        RestTemplate restTemplate=new RestTemplate();
+        List<UserBefore> userBeforeList=new ArrayList<>();
+        userBeforeList.add(new UserBefore(userInQueues.get(0).getUserId().toString(),statusType-2));
+        for (int i=1;i<userInQueues.size();i++)
+        {
+            System.out.println("通知的userId:"+userInQueues.get(i).getUserId().toString()+"前面的人的个数："+(i-1));
+            userBeforeList.add(new UserBefore(userInQueues.get(i).getUserId().toString(),i-1));
+        }
+        restTemplate.postForEntity("http://message-push:3000/push",userBeforeList, String.class);
+
         Integer orderId=queueMapper.getOrderIdInQueueFirst(consultingRoomId);
         System.out.println("查出的orderId"+orderId);
         switch (statusType)
@@ -58,15 +71,9 @@ public class AdminServiceImp implements AdminService {
             default:{
             }
         }
-        List<UserInQueue> userInQueues=queueMapper.getUserInQueueList(consultingRoomId);
-        RestTemplate restTemplate=new RestTemplate();
-        List<UserBefore> userBeforeList=new ArrayList<>();
-        for (int i=0;i<userInQueues.size();i++)
-        {
-            System.out.println("通知的userId:"+userInQueues.get(i).getUserId().toString()+"前面的人的个数："+i);
-            userBeforeList.add(new UserBefore(userInQueues.get(i).getUserId().toString(),i));
-        }
-        restTemplate.postForEntity("http://message-push:3000/push",userBeforeList, String.class);
+
+        userInQueues.remove(0);
+
         return ObjectConverter.INSTANCE.userInQueueList2UserInQueueVOList(userInQueues);
     }
 }
