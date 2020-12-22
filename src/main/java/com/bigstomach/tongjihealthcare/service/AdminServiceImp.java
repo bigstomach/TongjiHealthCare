@@ -66,7 +66,7 @@ public class AdminServiceImp implements AdminService {
             System.out.println("通知的userId:"+userInQueues.get(i).getUserId().toString()+"前面的人的个数："+i);
             userBeforeList.add(new UserBefore(userInQueues.get(i).getUserId().toString(),i));
         }
-        restTemplate.postForEntity("http://39.106.53.1:3000/push",userBeforeList, String.class);
+        restTemplate.postForEntity("http://message-push:3000/push",userBeforeList, String.class);
         return ObjectConverter.INSTANCE.userInQueueList2UserInQueueVOList(userInQueues);
     }
 }
