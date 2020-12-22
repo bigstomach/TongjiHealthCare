@@ -1,8 +1,6 @@
 package com.bigstomach.tongjihealthcare.mapper;
 
-import com.bigstomach.tongjihealthcare.model.AddFamily;
-import com.bigstomach.tongjihealthcare.model.Family;
-import com.bigstomach.tongjihealthcare.model.FamilyMember;
+import com.bigstomach.tongjihealthcare.model.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.data.repository.query.Param;
 
@@ -17,4 +15,5 @@ public interface FamilyMapper {
     Integer getFamilyIdByCreator(String creatorName);
     List<FamilyMember> getMemberList(@Param("familyId") Integer familyId, @Param("UserId") Integer UserId);
     FamilyMember getMyFamilyInfo(Integer UserId);
+    UserInFamily getMyInfo(Integer UserId);
 }

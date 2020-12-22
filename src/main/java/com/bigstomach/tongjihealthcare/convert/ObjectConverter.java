@@ -42,4 +42,8 @@ public interface ObjectConverter {
     UserInFamiyVO familyMember2UserInFamilyVO(FamilyMember familyMember);
 
     List<UserInFamiyVO> familyMemberList2UserInFamilyList(List<FamilyMember> familyMembers);
+
+    @Mapping(target = "value",expression = "java(userInFamily.getUserId())")
+    @Mapping(target = "text",expression = "java(userInFamily.getUserName())")
+    UserInFamiyVO userInfamily2UserInfamilyVO(UserInFamily userInFamily);
 }
