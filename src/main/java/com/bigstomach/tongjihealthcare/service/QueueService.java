@@ -17,7 +17,6 @@ public interface QueueService {
 
     void cancel(Integer orderId);
 
-
     OrderInQueueVO getQueueOrder(Integer userId);
 
     Integer getPeopleBefore(Integer orderId);
