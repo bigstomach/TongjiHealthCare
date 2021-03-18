@@ -8,7 +8,7 @@ COPY src /build/src/
 # 修改maven源
 RUN sed -i -e 's/<mirrors>/&    <mirror>      <id>nexus-aliyun<\/id>      <url>http:\/\/maven.aliyun.com\/nexus\/content\/groups\/public<\/url>      <mirrorOf>*<\/mirrorOf>    <\/mirror>/' /usr/share/maven/conf/settings.xml
 # 执行maven打包
-RUN mvn package
+RUN mvn package -DskipTests
 # 运行jar采用jdk基础镜像
 FROM openjdk:8-jdk-alpine
 # 设置工作目录在镜像的 /app 目录下
@@ -16,4 +16,4 @@ WORKDIR /app
 # 将jar包添加到容器中 /app 目录下
 COPY --from=MAVEN_BUILD /build/target/tongjihealthcare-0.0.1-SNAPSHOT.jar /app/
 # 运行jar包
-ENTRYPOINT ["java","-jar","tongjihealthcare-0.0.1-SNAPSHOT.jar","--spring.config.location=/conf/application.properties","-DskipTests"]
+ENTRYPOINT ["java","-jar","tongjihealthcare-0.0.1-SNAPSHOT.jar","--spring.config.location=/conf/application.properties"]
