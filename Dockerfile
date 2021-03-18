@@ -16,4 +16,4 @@ WORKDIR /app
 # 将jar包添加到容器中 /app 目录下
 COPY --from=MAVEN_BUILD /build/target/tongjihealthcare-0.0.1-SNAPSHOT.jar /app/
 # 运行jar包
-ENTRYPOINT ["java","-jar","tongjihealthcare-0.0.1-SNAPSHOT.jar","--spring.config.addition-location=/conf/application.properties"]
+ENTRYPOINT ["java","-jar","tongjihealthcare-0.0.1-SNAPSHOT.jar","--spring.config.addition-location=/conf/application.properties","-DskipTests"]
